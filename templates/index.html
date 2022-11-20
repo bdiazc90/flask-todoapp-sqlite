@@ -25,15 +25,33 @@
 
         <ul class="list-group shadow">
             {% for task in lista_tareas  %}
-            <div class="d-flex">
-                <a class="list-group-item list-group-item-action {% if task.doneAt != None %} bg-success text-white {% endif %} {% if task.deletedAt != None %} bg-danger text-white {% endif %}" aria-current="true" href="{{ url_for('task', id=task.id) }}">
+            {% if task.deletedAt != None %}
+            <li class="list-group-item list-group-item-danger">
+                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
                     {{ task.id }} : {{ task.text }}
                 </a>
-                {% if task.deletedAt == None %}
-                <a class="btn btn-sm btn-danger" href="/delete/{{ task.id }}">x</a>
-                {% endif %}
-            </div>
-            
+            </li>
+            {% elif task.doneAt != None %}
+            <li class="list-group-item list-group-item-success">
+                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
+                    {{ task.id }} : {{ task.text }}
+                </a>
+                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>
+            </li>
+            {% else %}
+            <li class="list-group-item">
+                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
+                    {{ task.id }} : {{ task.text }}
+                </a>
+                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>
+                <span class="float-end">&nbsp;</span>
+                <form action="/done" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="{{ task.id }}">
+                    <input type="hidden" name="next" value="/">
+                    <button type="submit" class="btn btn-sm btn-success float-end fw-bold">&check;</button>
+                </form>
+            </li>
+            {% endif %}
             {% endfor  %}
         </ul>
     </div>

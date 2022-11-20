@@ -70,12 +70,16 @@ def task(id = None):
 @app.route("/done", methods=["POST"])
 def done():
     task_id = request.form.get("id")
+    next = request.form.get("next")
     task = Task.query.get(task_id)
     if task == None:
         return redirect("/")
     # Si existe la tarea:
     task.doneAt = datetime.now()
     db.session.commit()
+    # finish:
+    if next != None:
+        return redirect(next)
     return redirect("/task/" + str(task_id))
 
 @app.route("/delete/<int:id>")
