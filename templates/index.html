@@ -12,11 +12,28 @@
     <div class="container-sm mt-5">
         <h1 class="display-3">Todo App</h1>
         <hr>
-        <ul class="list-group">
+
+        <div class="card p-3 shadow">
+            <form action="/add" method="post">
+                <div class="input-group mb-0">
+                    <input type="text" name="text" class="form-control" placeholder="new task...">
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+
+        <ul class="list-group shadow">
             {% for task in lista_tareas  %}
-            <li class="list-group-item">
-                {{ task.id }} : <a href="{{ url_for('task', id=task.id) }}">{{ task.text }}</a>
-            </li>
+            <div class="d-flex">
+                <a class="list-group-item list-group-item-action {% if task.doneAt != None %} bg-success text-white {% endif %} {% if task.deletedAt != None %} bg-danger text-white {% endif %}" aria-current="true" href="{{ url_for('task', id=task.id) }}">
+                    {{ task.id }} : {{ task.text }}
+                </a>
+                {% if task.deletedAt == None %}
+                <a class="btn btn-sm btn-danger" href="/delete/{{ task.id }}">x</a>
+                {% endif %}
+            </div>
+            
             {% endfor  %}
         </ul>
     </div>
