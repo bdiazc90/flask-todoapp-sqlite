@@ -27,20 +27,20 @@
             {% for task in lista_tareas  %}
             {% if task.deletedAt != None %}
             <li class="list-group-item list-group-item-danger">
-                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
+                <a class="list-group-item-action" href="{{ url_for('task.task', id=task.id) }}">
                     {{ task.id }} : {{ task.text }}
                 </a>
             </li>
             {% elif task.doneAt != None %}
             <li class="list-group-item list-group-item-success">
-                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
+                <a class="list-group-item-action" href="{{ url_for('task.task', id=task.id) }}">
                     {{ task.id }} : {{ task.text }}
                 </a>
                 <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>
             </li>
             {% else %}
             <li class="list-group-item">
-                <a class="list-group-item-action" href="{{ url_for('task', id=task.id) }}">
+                <a class="list-group-item-action" href="{{ url_for('task.task', id=task.id) }}">
                     {{ task.id }} : {{ task.text }}
                 </a>
                 <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>

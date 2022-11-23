@@ -10,8 +10,11 @@
 <body>
     <div class="container-sm mt-5">
         <a href="/" class="btn btn-primary">Regresar</a>
+        <div class="d-flex justify-content-between">
+            <h1 class="display-4 mt-3">{{ task.id }} : {{ task.text }}</h1>
+            <a href="#" class="btn btn-primary" id="btnEdit">edit</a>
+        </div>
         
-        <h1 class="display-4 mt-3">{{ task.id }} : {{ task.text }}</h1>
         <hr>
         <p>
             Creado en: {{ task.createdAt.strftime("%Y-%m-%d %H:%M:%S") }}
@@ -38,4 +41,5 @@
         {% endif %}
     </div>
 </body>
+<script src="{{ url_for('static', filename='js/taskapp.js') }}"></script>
 </html>
