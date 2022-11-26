@@ -25,9 +25,17 @@ def add():
     if task_text == "" or task_text == None:
         return redirect("/")
     
-    newTask = Task(text=task_text, createdAt=datetime.now())
-    db.session.add(newTask) # Por dentro creará el SQL COMMAND: INSERT
-    db.session.commit() # Envia los SQL COMMAND al motor de DB.
+    newTask = {
+        "text": task_text,
+        "createdAt": datetime.now(),
+        "doneAt": None,
+        "deletedAt": None,
+    }
+    db.tasks.insert_one(newTask)
+
+    # newTask = Task(text=task_text, createdAt=datetime.now())
+    # db.session.add(newTask) # Por dentro creará el SQL COMMAND: INSERT
+    # db.session.commit() # Envia los SQL COMMAND al motor de DB.
     return redirect("/")
 
 
@@ -63,23 +71,25 @@ def task(id = None):
 def done():
     task_id = request.form.get("id")
     next = request.form.get("next")
-    task = Task.query.get(task_id)
+    task = db.tasks.find_one_and_update({'_id':ObjectId(task_id)}, {"$set": {"doneAt": datetime.now()}}, upsert=False, return_document=ReturnDocument.AFTER)
+    # task = Task.query.get(task_id)
     if task == None:
         return redirect("/")
-    # Si existe la tarea:
-    task.doneAt = datetime.now()
-    db.session.commit()
+    # # Si existe la tarea:
+    # task.doneAt = datetime.now()
+    # db.session.commit()
     # finish:
     if next != None:
         return redirect(next)
     return redirect("/task/" + str(task_id))
 
-@task_router.route("/delete/<int:id>")
+@task_router.route("/delete/<id>")
 def delete(id):
-    task = Task.query.get(id)
+    task = db.tasks.find_one_and_update({'_id':ObjectId(id)}, {"$set": {"deletedAt": datetime.now()}}, upsert=False, return_document=ReturnDocument.AFTER)
+    # task = Task.query.get(id)
     if task == None:
         return redirect("/")
     # Si existe la tarea:
-    task.deletedAt = datetime.now()
-    db.session.commit()
+    # task.deletedAt = datetime.now()
+    # db.session.commit()
     return redirect("/task/" + str(id))

@@ -33,7 +33,7 @@
             </li>
             {% elif task.doneAt != None %}
             <li class="list-group-item list-group-item-success">
-                <a class="list-group-item-action" href="">
+                <a class="list-group-item-action" href="{{ url_for('task_router.task', id=task._id) }}">
                     {{ task.text }}
                 </a>
                 <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task._id }}">&times;</a>
