@@ -24,12 +24,12 @@
             Creado en: {{ task.createdAt.strftime("%Y-%m-%d %H:%M:%S") }}
             {% endif %}
         </p>
-        {% if task.doneAt != None %}
+        {% if task.doneAt %}
         <p>
             Completado en: {{ task.doneAt.strftime("%Y-%m-%d %H:%M:%S") }}
         </p>
         {% else %}
-            {% if task.deletedAt == None %}
+            {% if task.deletedAt %}
             <form action="/done" method="post">
                 <input type="hidden" name="id" value="{{ task._id }}">
                 <button type="submit" class="btn btn-success">Completado</button>
@@ -37,7 +37,7 @@
             {% endif %}
         {% endif %}
 
-        {% if task.deletedAt != None %}
+        {% if task.deletedAt %}
         <p>
             Eliminado en: {{ task.deletedAt.strftime("%Y-%m-%d %H:%M:%S") }}
         </p>
