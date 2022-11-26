@@ -10,8 +10,15 @@
 <body>
     <div class="container-sm mt-5">
         <a href="/" class="btn btn-primary">Regresar</a>
+        <div class="d-flex justify-content-between">
+            <h1 class="display-4 mt-3">
+                <span id="taskId">{{ task.id }}</span>:
+                <span id="taskText">{{ task.text }}</span>
+                
+            </h1>
+            <a class="btn btn-secondary" href="javascript: edit(this);">editar</a>
+        </div>
         
-        <h1 class="display-4 mt-3">{{ task.id }} : {{ task.text }}</h1>
         <hr>
         <p>
             Creado en: {{ task.createdAt.strftime("%Y-%m-%d %H:%M:%S") }}
@@ -38,4 +45,5 @@
         {% endif %}
     </div>
 </body>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 </html>

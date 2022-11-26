@@ -6,3 +6,12 @@ class Task(db.Model):
     createdAt = db.Column(db.DateTime(timezone=False))
     doneAt = db.Column(db.DateTime(timezone=False))
     deletedAt = db.Column(db.DateTime(timezone=False))
+
+    def dict(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+            'createdAt': self.createdAt,
+            'doneAt': self.doneAt,
+            'deletedAt': self.deletedAt,
+        }

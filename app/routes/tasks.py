@@ -25,12 +25,12 @@ def add():
     return redirect("/")
 
 
-# @app.route("/fix")
-# def fix():
-#     error_task = Task.query.get(1)
-#     error_task.createdAt = datetime.now()    
-#     db.session.commit()
-#     return redirect("/")
+@task_router.route("/update/<int:id>", methods=["PUT"])
+def update(id):
+    task = Task.query.get(id)
+    task.text = request.form.get("text")
+    db.session.commit()
+    return task.dict(), 200
 
 
 @task_router.route("/task", defaults={'id': None})
