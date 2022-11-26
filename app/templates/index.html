@@ -27,26 +27,26 @@
             {% for task in lista_tareas  %}
             {% if task.deletedAt != None %}
             <li class="list-group-item list-group-item-danger">
-                <a class="list-group-item-action" href="{{ url_for('task_router.task', id=task.id) }}">
-                    {{ task.id }} : {{ task.text }}
+                <a class="list-group-item-action" href="">
+                    {{ task.text }}
                 </a>
             </li>
             {% elif task.doneAt != None %}
             <li class="list-group-item list-group-item-success">
-                <a class="list-group-item-action" href="{{ url_for('task_router.task', id=task.id) }}">
-                    {{ task.id }} : {{ task.text }}
+                <a class="list-group-item-action" href="">
+                    {{ task.text }}
                 </a>
-                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>
+                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task._id }}">&times;</a>
             </li>
             {% else %}
             <li class="list-group-item">
-                <a class="list-group-item-action" href="{{ url_for('task_router.task', id=task.id) }}">
-                    {{ task.id }} : {{ task.text }}
+                <a class="list-group-item-action" href="{{ url_for('task_router.task', id=task._id) }}">
+                    {{ task.text }}
                 </a>
-                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task.id }}">&times;</a>
+                <a class="btn btn-sm btn-danger float-end fw-bold" href="/delete/{{ task._id }}">&times;</a>
                 <span class="float-end">&nbsp;</span>
                 <form action="/done" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="{{ task.id }}">
+                    <input type="hidden" name="id" value="{{ task._id }}">
                     <input type="hidden" name="next" value="/">
                     <button type="submit" class="btn btn-sm btn-success float-end fw-bold">&check;</button>
                 </form>

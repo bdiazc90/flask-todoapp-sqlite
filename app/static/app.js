@@ -1,6 +1,6 @@
 console.log("Hola a todos, soy Javascript");
 
-const taskId = document.querySelector("#taskId").innerText;
+const taskId = document.querySelector("#taskId").value;
 const taskSection = document.querySelector("#task_section");
 const editButton = taskSection.querySelector("a.btn");
 
@@ -28,7 +28,7 @@ function save() {
 			(data) =>
 				(taskSection.innerHTML = `
 		<h1 class="display-4 mt-3">
-		<span id="taskId">${data.id}</span>:
+		<input id="taskId" type="hidden" value="${data.id}" />
 		<span id="taskText">${data.text}</span>
 	</h1>
 	<a class="btn btn-secondary" href="javascript: edit(this);">editar</a>`)
