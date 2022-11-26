@@ -10,11 +10,10 @@
 <body>
     <div class="container-sm mt-5">
         <a href="/" class="btn btn-primary">Regresar</a>
-        <div class="d-flex justify-content-between">
+        <div id="task_section">
             <h1 class="display-4 mt-3">
                 <span id="taskId">{{ task.id }}</span>:
                 <span id="taskText">{{ task.text }}</span>
-                
             </h1>
             <a class="btn btn-secondary" href="javascript: edit(this);">editar</a>
         </div>
