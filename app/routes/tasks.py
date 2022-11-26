@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, request
 from app.db import db
-from app.models.task import Task
+# from app.models.task import Task
 from datetime import datetime
 
 task_router = Blueprint("task_router", __name__)
@@ -10,8 +10,21 @@ task_router = Blueprint("task_router", __name__)
 #
 @task_router.route("/")
 def index():
-    task_list = Task.query.all() # SELECT * FROM task
-    return render_template("index.html", lista_tareas=task_list)
+    tasks = db.todoapp.task.find()
+    for task in tasks:
+        print(task["text"])
+    # task_list = Task.query.all() # SELECT * FROM task
+    return render_template("index.html", lista_tareas=list(tasks))
+
+@task_router.route("/ex")
+def ex():
+    task = {
+        "text": "Hola mundo",
+        "createdAt": datetime.now(),
+    }
+    db.todoapp.task.insert_one(task)
+    return task['text']
+
 
 @task_router.route("/add", methods=["POST"])
 def add():
